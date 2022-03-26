@@ -3,10 +3,11 @@ import UserContext from "../context/UserContext";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import Entry from "../components/Entry";
 import { supabase } from "../supabaseClient";
+import { data } from "autoprefixer";
 
 function Home() {
   const user = localStorage.getItem("user");
-  const { logout, getUserId } = useContext(UserContext);
+  const { logout, getEntries } = useContext(UserContext);
 
   let navigate = useNavigate();
 
@@ -14,7 +15,7 @@ function Home() {
     if (user === null) {
       navigate("/auth");
     } else {
-      await getEntries();
+      await getEntriesLocal();
     }
   }, []);
 
@@ -25,18 +26,11 @@ function Home() {
     }
   }
 
-  async function getEntries() {
-    try {
-      const { data, error } = await supabase.from("entries").select("*");
-      if (error) throw error;
-      setEntries([]);
-      data.forEach((entry) => {
-        console.log(entry);
-        setEntries((oldEntries) => [...oldEntries, entry]);
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  async function getEntriesLocal() {
+    const res = await getEntries();
+    res.forEach((entry) => {
+      setEntries((oldArr) => [...oldArr, entry]);
+    });
   }
 
   const [entries, setEntries] = useState([]);
@@ -52,13 +46,13 @@ function Home() {
           className="btn bg-red-600 text-white font-bold my-3 mr-1 hover:bg-black"
           to="/new-entry"
         >
-          Nueva entrada
+          New Entry
         </Link>
         <button
           className="btn bg-red-600 text-white font-bold my-3 ml-1 hover:bg-black"
           onClick={signOut}
         >
-          Cerrar Sesión
+          Log Out
         </button>
       </div>
 

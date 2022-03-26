@@ -43,13 +43,30 @@ export const UserProvider = ({ children }) => {
   async function getEntries() {
     // const id = getUserId();
     try {
-      const { data, error } = await supabase.from("entries").select("*");
+      const { data, error } = await supabase
+        .from("entries")
+        .select("*")
+        .order("id", { ascending: false })
+        .limit(10);
       if (error) throw error;
-      const entries = [];
-      data.forEach((entry) => {
-        entries.push(entry);
-      });
+      const entries = data;
       return entries;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function saveEntry(title, content) {
+    const id = getUserId();
+    try {
+      const { data, error } = await supabase
+        .from("entries")
+        .insert({ user_id: id, title: title, entry: content });
+      if (error) throw error;
+      return {
+        status: 200,
+        data,
+      };
     } catch (error) {
       console.log(error);
     }
@@ -57,7 +74,7 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, login, logout, getUserId, getEntries }}
+      value={{ user, login, logout, getUserId, getEntries, saveEntry }}
     >
       {children}
     </UserContext.Provider>
