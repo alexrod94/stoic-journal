@@ -43,9 +43,9 @@ function Home() {
 
   return (
     <div className="flex flex-col items-center mx-3">
-      <h2 className="text-center text-white text-2xl">Bienvenido, {user}</h2>
+      <h2 className="text-center text-white text-2xl">Welcome, {user}</h2>
       <h3 className="text-center text-white text-xl">
-        ¿En qué estás pensando hoy?
+        What are you thinking today?
       </h3>
       <div className="flex flex-row">
         <Link
@@ -62,16 +62,24 @@ function Home() {
         </button>
       </div>
 
-      <h3 className="text-center text-white mb-1">Tus entradas anteriores</h3>
-      {entries.map((entry) => {
-        return (
-          <Entry
-            title={entry.title}
-            content={entry.entry}
-            date={entry.inserted_at}
-          />
-        );
-      })}
+      <h3 className="text-center text-white mb-1">Your latest entries</h3>
+
+      {entries.length > 0 ? (
+        entries.map((entry) => {
+          return (
+            <Entry
+              title={entry.title}
+              content={entry.entry}
+              date={entry.inserted_at}
+            />
+          );
+        })
+      ) : (
+        <p className="text-white text-sm">
+          You still haven't created your first entry. Get started on your
+          journaling journey today!
+        </p>
+      )}
     </div>
   );
 }

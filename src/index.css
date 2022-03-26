@@ -10,6 +10,10 @@
   @apply bg-black text-white;
 }
 
+.btn-green {
+  @apply bg-green-600 text-white font-bold my-3 mr-1 hover:bg-black flex flex-row items-center;
+}
+
 .btn-black:hover {
   @apply bg-blue-500;
 }
