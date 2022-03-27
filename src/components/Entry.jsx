@@ -6,6 +6,7 @@ function Entry({ title, content, date }) {
   useEffect(() => {
     const goodDate = date.split("T");
     setDate(goodDate[0].split("-").reverse().join("/"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
