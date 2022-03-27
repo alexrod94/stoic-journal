@@ -1,9 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import UserContext from "../context/UserContext";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Entry from "../components/Entry";
-import { supabase } from "../supabaseClient";
-import { data } from "autoprefixer";
 
 function Home() {
   const user = localStorage.getItem("user");

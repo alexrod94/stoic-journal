@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import UserContext from "../context/UserContext";
 
 function Login() {
-  const { user, getUser, login } = useContext(UserContext);
+  const { login } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
