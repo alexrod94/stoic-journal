@@ -11,14 +11,6 @@ function Home() {
 
   let navigate = useNavigate();
 
-  useEffect(async () => {
-    if (user === null) {
-      navigate("/auth");
-    } else {
-      await getEntriesLocal();
-    }
-  }, []);
-
   async function signOut() {
     const res = await logout();
     if (res.status === 200) {
@@ -34,6 +26,17 @@ function Home() {
   }
 
   const [entries, setEntries] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user === null) {
+        navigate("/auth");
+      } else {
+        await getEntriesLocal();
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="flex flex-col items-center mx-3">
